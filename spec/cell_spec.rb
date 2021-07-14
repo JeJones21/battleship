@@ -5,7 +5,7 @@ RSpec.describe Cell do
   it "exists" do
     cell = Cell.new("B4")
 
-    expect(cell).be_an_instance_of(Cell)
+    expect(cell).to be_an_instance_of(Cell)
   end
 
 end
