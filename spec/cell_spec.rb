@@ -18,5 +18,6 @@ RSpec.describe Cell do
     cell = Cell.new("B4")
 
     expect(cell.ship).to eq(nil)
+    expect(cell.empty?).to eq(true)
   end
 end
