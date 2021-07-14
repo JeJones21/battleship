@@ -16,4 +16,9 @@ class Cell
     end
   end
 
+  def place_ship(ship)
+    #when we place a ship our cell now contains a ship
+    @ship = ship 
+  end
+
 end
