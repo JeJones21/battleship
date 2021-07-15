@@ -1,5 +1,6 @@
 require './lib/ship'
 require './lib/cell'
+require 'pry'
 
 RSpec.describe Cell do
   it "exists" do
@@ -59,6 +60,7 @@ RSpec.describe Cell do
     cell_2.place_ship(cruiser)
 
     expect(cell_2.render).to eq(".")
+
     # Indicate that we want to show a ship with the optional argument
     expect(cell_2.render(true)).to eq("S")
 
