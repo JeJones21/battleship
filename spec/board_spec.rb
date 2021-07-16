@@ -8,4 +8,12 @@ RSpec.describe Board do
 
     expect(board).to be_a(Board)
   end
+
+  it "can setup board with cells" do
+    board = Board.new
+
+    board.cell_setup
+
+    expect(board.cells.length).to eq(16)
+  end
 end
