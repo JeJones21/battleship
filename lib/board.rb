@@ -1,4 +1,5 @@
 require './lib/cell'
+require 'pry'
 
 class Board
 
@@ -25,6 +26,8 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count
+    # ship.length == coordinates.count
+    # helper method
+    # helper method
   end
 end
