@@ -16,4 +16,16 @@ RSpec.describe Board do
 
     expect(board.cells.length).to eq(16)
   end
+
+  it 'can validate coordinate' do
+    board = Board.new
+
+    board.cell_setup
+
+    expect(board.valid_coordinate?("A1")).to eq(true)
+    expect(board.valid_coordinate?("D4")).to eq(true)
+    expect(board.valid_coordinate?("A5")).to eq(false)
+    expect(board.valid_coordinate?("E1")).to eq(false)
+    expect(board.valid_coordinate?("A22")).to eq(false)
+  end
 end
