@@ -5,7 +5,8 @@ class Board
 
   attr_reader :cells,
               :lets,
-              :nums
+              :nums,
+              :ship_lengthd
 
   def initialize
     @cells = {}
@@ -31,7 +32,7 @@ class Board
     #first compare the length with overlapping/split and compare
     if scl(ship, coordinates) && overlapping?(coordinates)
       split_coords(coordinates)
-       if finalize_that_shit
+       if finalize_that
           true
         else
           false
@@ -84,10 +85,19 @@ class Board
     ((@lets.uniq.count == 1) && (@nums.uniq.count == 1)) || ((1..4).each_cons(@ship_length).include?(@nums) && (65..68).each_cons(@ship_length).include?(@lets))
   end
 
-  def finalize_that_shit
+  def finalize_that
     #compare the letters nums and diagonal
     (letters_bruh && numbers_bruh) && (diagonal? == false)
   end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        (@cells[coordinate]).place_ship(ship)
+      end
+    end
+  end
+
 
 
 
