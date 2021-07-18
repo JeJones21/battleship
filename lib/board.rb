@@ -87,7 +87,7 @@ class Board
 
   def finalize_that
     #compare the letters nums and diagonal
-    (letters_bruh && numbers_bruh) && (diagonal? == false)
+    (letters_check && numbers_check) && (diagonal? == false)
   end
 
   def place(ship, coordinates)
