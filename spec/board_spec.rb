@@ -1,5 +1,5 @@
-require './lib/ship'
 require './lib/cell'
+require './lib/ship'
 require './lib/board'
 
 RSpec.describe Board do
