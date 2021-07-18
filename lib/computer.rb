@@ -16,7 +16,13 @@ class Computer
     @ships << ship
   end
 
-  def random_placement
+  # def comp_coords(ship, length)
+  #   coordinates = []
+  # end
+  #
+  # def random_placement
+  # end
 
-  end
+  #will need to add the shots.
+  #AFTER THIS WE GET TO START GAME FLOW MESSAGES
 end
