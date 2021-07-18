@@ -32,11 +32,15 @@ RSpec.describe Computer do
 
     expect(wizard.ships).to eq([cruise_ship, sub])
   end
-
-
-
-
 end
+
+
+
+
+
+
+
+
 
 
 
