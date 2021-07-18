@@ -98,6 +98,22 @@ class Board
     end
   end
 
+  def render(reveal = false)
+    strings = "  1 2 3 4 \n"
+    alphabet = ["A", "B", "C", "D"]
+    numbers = ["1", "2", "3", "4"]
+    alphabet.each do |letter|
+      strings = strings + letter + " "
+      numbers.each do |number|
+        coordinate = letter + number
+        strings = strings + @cells[coordinate].render(reveal) + " "
+      end
+      strings = strings + "\n"
+    end
+    return strings
+  end
+
+
 
 
 
