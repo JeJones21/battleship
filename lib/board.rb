@@ -6,7 +6,7 @@ class Board
   attr_reader :cells,
               :lets,
               :nums,
-              :ship_lengthd
+              :ship_length
 
   def initialize
     @cells = {}
