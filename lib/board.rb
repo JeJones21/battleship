@@ -6,7 +6,7 @@ class Board
   attr_reader :cells,
               :lets,
               :nums,
-              :ship_length
+              :ship_lengthd
 
   def initialize
     @cells = {}
@@ -42,6 +42,8 @@ class Board
     end
   end
 
+
+
   def scl(ship, coordinates)
     #scl stands for ship/coordinates/length
     ship.length == coordinates.length && @cells[coordinates]
@@ -70,11 +72,11 @@ class Board
     end
   end
 
-  def numbers_bruh
+  def numbers_check
     (1..4).each_cons(@ship_length).include?(@nums) || @nums.uniq.count == 1
   end
 
-  def letters_bruh
+  def letters_check
     (65..68).each_cons(@ship_length).include?(@lets) || @lets.uniq.count == 1
   end
 
