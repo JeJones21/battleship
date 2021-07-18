@@ -6,7 +6,7 @@ class Board
   attr_reader :cells,
               :lets,
               :nums,
-              :ship_lengthd
+              :ship_length
 
   def initialize
     @cells = {}
@@ -41,8 +41,6 @@ class Board
       false
     end
   end
-
-
 
   def scl(ship, coordinates)
     #scl stands for ship/coordinates/length

@@ -40,6 +40,26 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to eq(false)
   end
 
+  it "can compare ship length to the coordinate length" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cell_setup
+
+    expect(board.scl(cruiser, ["A1", "A2", "A3"])).to eq(3)
+  end
+
+  xit "can split the coordinates" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cell_setup
+
+    expect(board.split_coords("A1")).to eq()
+  end
+
   it "can validate placement by consecutively" do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -61,8 +81,8 @@ RSpec.describe Board do
     board.cell_setup
 
     expect(board.valid_placement?(cruiser, ["A1","A2", "A3"])).to eq(true)
+    expect(board.finalize_that).to eq(true)
   end
-
 
   it "can place ship" do
     board = Board.new
@@ -93,6 +113,27 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, ["A1", "B1"])).to eq(false)
   end
 
+  it "can check letters and numbers" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    board.cell_setup
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    expect(board.numbers_bruh).to eq(true)
+    expect(board.letters_bruh).to eq(true)
+  end
+
+  it "can check if diagonal" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    board.cell_setup
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    expect(board.diagonal?).to eq(false)
+  end
+
   it "can render a grid" do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -102,3 +143,4 @@ RSpec.describe Board do
 
     expect(board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
   end
+end
