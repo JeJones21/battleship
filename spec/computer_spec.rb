@@ -28,13 +28,15 @@ RSpec.describe Computer do
     sub = Ship.new("Submarine", 2)
 
     wizard.add_ships(cruise_ship)
-
-    expect(wizard.add_ships).to eq(cruise_ship)
-
     wizard.add_ships(sub)
 
-    expect(wizard.add_ships).to eq(sub)
+    expect(wizard.ships).to eq([cruise_ship, sub])
   end
+
+
+
+
+end
 
 
 
