@@ -40,6 +40,16 @@ RSpec.describe Board do
     expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to eq(false)
   end
 
+  it "can compare ship length to the coordinate length" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cell_setup
+
+    expect(board.scl(cruiser, ["A1", "A2", "A3"])).to eq(3)
+  end
+
   it "can validate placement by consecutively" do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -61,8 +71,8 @@ RSpec.describe Board do
     board.cell_setup
 
     expect(board.valid_placement?(cruiser, ["A1","A2", "A3"])).to eq(true)
+    expect(board.finalize_that).to eq(true)
   end
-
 
   it "can place ship" do
     board = Board.new
