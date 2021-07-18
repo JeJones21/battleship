@@ -104,6 +104,16 @@ RSpec.describe Board do
     expect(board.letters_bruh).to eq(true)
   end
 
+  it "can check if diagonal" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    board.cell_setup
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    expect(board.diagonal?).to eq(false)
+  end
+
   it "can render a grid" do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
