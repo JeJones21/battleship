@@ -40,8 +40,8 @@ class Board
     else
       false
     end
-
   end
+
 
 
   def scl(ship, coordinates)
@@ -112,9 +112,4 @@ class Board
     end
     return strings
   end
-
-
-
-
-
 end
