@@ -42,8 +42,6 @@ class Board
     end
   end
 
-
-
   def scl(ship, coordinates)
     #scl stands for ship/coordinates/length
     ship.length == coordinates.length && @cells[coordinates]
