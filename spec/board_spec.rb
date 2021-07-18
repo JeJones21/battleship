@@ -50,6 +50,16 @@ RSpec.describe Board do
     expect(board.scl(cruiser, ["A1", "A2", "A3"])).to eq(3)
   end
 
+  xit "can split the coordinates" do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cell_setup
+
+    expect(board.split_coords("A1")).to eq()
+  end
+
   it "can validate placement by consecutively" do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
