@@ -120,8 +120,8 @@ RSpec.describe Board do
     board.cell_setup
     board.place(cruiser, ["A1", "A2", "A3"])
 
-    expect(board.numbers_bruh).to eq(true)
-    expect(board.letters_bruh).to eq(true)
+    expect(board.numbers_check).to eq(true)
+    expect(board.letters_check).to eq(true)
   end
 
   it "can check if diagonal" do
