@@ -13,14 +13,6 @@ RSpec.describe Computer do
     expect(wiz_board).to be_a(Board)
   end
 
-  it "has readable attributes" do
-    wiz_board = Board.new
-    wizard = Computer.new(wiz_board)
-
-    expect(wizard.comp_board).to eq(wiz_board)
-    expect(wizard.comp_board.cells).to be_a(Hash)
-  end
-
   it "can add ships" do
     wiz_board = Board.new
     wizard = Computer.new(wiz_board)
@@ -32,17 +24,4 @@ RSpec.describe Computer do
 
     expect(wizard.ships).to eq([cruise_ship, sub])
   end
-end
-
-
-
-
-
-
-
-
-
-
-
-
 end
