@@ -1,12 +1,13 @@
 class Computer
 
-  attr_reader :comp_board,
-              :ships,
-              :cruise_ship,
-              :sub
+  attr_reader   :wiz_board,
+                :ships,
+                :cruise_ship,
+                :sub
 
-  def initialize(comp_board)
-    @comp_board = comp_board
+
+  def initialize(wiz_board)
+    @wiz_board = wiz_board
     @cruise_ship = Ship.new("Cruiser", 3)
     @sub = Ship.new("Submarine", 2)
     @ships = []
@@ -16,13 +17,17 @@ class Computer
     @ships << ship
   end
 
-  # def comp_coords(ship, length)
-  #   coordinates = []
-  # end
-  #
-  # def random_placement
-  # end
+  def comp_coords(ship, length)
+    coordinates = []
+    until @wiz_board.valid_placement?(ship, coordinates)
+      comp_coordinates = @wiz_board.cells.keys.sample(length)
+      coordinates = comp_coordinates
+    end
+    coordinates
+  end
 
-  #will need to add the shots.
-  #AFTER THIS WE GET TO START GAME FLOW MESSAGES
+  def comp_place(ship)
+    coordinates = comp_coords(ship, ship.length)
+    @wiz_board.place(ship, coordinates)
+  end
 end
