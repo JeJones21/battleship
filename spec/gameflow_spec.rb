@@ -9,7 +9,7 @@ RSpec.describe Gameflow do
     board = Board.new
     game = Gameflow.new
     wiz_board = Board.new
-    wizard = Computer.new(wiz_board)
+    wizard = Computer.new(board)
 
     expect(game).to be_a(Gameflow)
   end
