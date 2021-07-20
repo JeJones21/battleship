@@ -1,15 +1,22 @@
 class Gameflow
 
-  attr_reader
+  attr_reader :board,
+              :player,
+              :wizard,
+              :cruiser,
+              :submarine
 
   def initialize
-
+    @board = Board.new
+    @player = Board.new
+    @wizard = Computer.new(wiz_board)
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   def start
     welcome_message
     instructions
-    play_or_exit
     @board.render
   end
 
@@ -29,6 +36,14 @@ class Gameflow
     end
   end
 
+  def game_setup
+
+  end
+
+  def ship_placement
+
+  end
+
   def invalid
     puts "Invalid entry."
   end
@@ -45,9 +60,5 @@ class Gameflow
 
   def quit
     exit
-  end
-
-  def play_or_exit
-    # after a player's won, ask to play again
   end
 end
