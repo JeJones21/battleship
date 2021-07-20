@@ -173,7 +173,25 @@ class Gameflow
   def fire_missle
     puts "\nEnter the coordinate for your shot:"
     @player_input = input.upcase
+
     puts "\nNext is the firing upon the computer board."
     @wizard.wiz_board.fire_on_this_coordinate(@player_input)
+
+    # computer_fire
+    firing_result
   end
+
+  def computer_fire
+    # generate a new random coordinate
+    guess = @wiz_board.shots.sample
+    @comp_shots = guess
+    @board.cells[guess].fire_upon
+    @wiz_board.shots.delete(guess)
+  end
+
+  # def firing_result
+  #   puts "Your shot on #{@player_input} was a #{board.fire_on_this_coordinate(@player_input)}" # computer
+  #   puts "My shot on #{@comp_shots} was a #{}"
+  #   cell.render(true)
+  # end
 end

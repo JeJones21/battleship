@@ -3,14 +3,15 @@ class Computer
   attr_reader   :wiz_board,
                 :ships,
                 :cruise_ship,
-                :sub
-
+                :sub,
+                :shots
 
   def initialize(wiz_board)
     @wiz_board = wiz_board
     @cruise_ship = Ship.new("Cruiser", 3)
     @sub = Ship.new("Submarine", 2)
     @ships = []
+    @shots = @wiz_board.@cells.keys
   end
 
   def add_ships(ship)
