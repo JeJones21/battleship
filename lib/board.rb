@@ -97,10 +97,18 @@ class Board
   end
 
   def fire_on_this_coordinate(coordinate)
-    # checks if coordinate chosen by player is valid 
+    # checks if coordinate chosen by player is valid
     valid_coordinate?(coordinate)
     # takes in a coordinate chosen by the player and fires upon that cell
-    @cells[coordinate].fire_upon
+    cell = @cells[coordinate]
+    cell.fire_upon
+    if cell.ship_hit?
+      if cell.ship.sunk?
+        return 'Sunk'
+      end
+      return 'Hit'
+    end
+    return 'Miss'
   end
 
   def render(reveal = false)
