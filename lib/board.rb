@@ -96,6 +96,13 @@ class Board
     end
   end
 
+  def fire_on_this_coordinate(coordinate)
+    # checks if coordinate chosen by player is valid 
+    valid_coordinate?(coordinate)
+    # takes in a coordinate chosen by the player and fires upon that cell
+    @cells[coordinate].fire_upon
+  end
+
   def render(reveal = false)
     strings = "  1 2 3 4 \n"
     alphabet = ["A", "B", "C", "D"]
