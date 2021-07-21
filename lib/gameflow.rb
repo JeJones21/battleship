@@ -145,6 +145,7 @@ class Gameflow
       display_boards
       fire_missle
       if game_over && comp_sunk
+        puts "\n"
         puts " \n🍗 🍗 🍗 🍗 🍗 Winner Winner Chicken Dinner! 🍗 🍗 🍗 🍗 🍗 "
         puts "🔥" * 30 + "\n"
         puts "\n"
@@ -189,6 +190,12 @@ class Gameflow
       puts "❌ invalid coordinate try again ❌"
       player_input = input.upcase
     end
+
+    while @wizard.wiz_board.cells[player_input].fired_upon? == true
+      puts "You've already fired there! Choose another coordinate!"
+      player_input = input.upcase
+    end
+
       @wizard.wiz_board.cells[player_input].fire_upon
       player_result(player_input)
   end
