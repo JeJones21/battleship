@@ -30,7 +30,7 @@ class Board
 
   def valid_placement?(ship, coordinates)
     #first compare the length with overlapping/split and compare
-    if scl(ship, coordinates) && overlapping?(coordinates)
+    if scl(ship, coordinates) && are_coordinates_valid?(coordinates) && overlapping?(coordinates)
       split_coords(coordinates)
        if finalize_that
           true
@@ -40,6 +40,15 @@ class Board
     else
       false
     end
+  end
+
+  def are_coordinates_valid?(coordinates)
+    coordinates.each do |coordinate|
+      if (!valid_coordinate?(coordinate))
+        return false
+      end
+    end
+    true
   end
 
   def scl(ship, coordinates)
