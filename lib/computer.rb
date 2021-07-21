@@ -11,7 +11,7 @@ class Computer
     @cruise_ship = Ship.new("Cruiser", 3)
     @sub = Ship.new("Submarine", 2)
     @ships = []
-    @shots = @wiz_board.@cells.keys
+    @shots = @wiz_board.cells.keys
   end
 
   def add_ships(ship)
