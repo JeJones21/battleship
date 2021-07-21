@@ -29,7 +29,8 @@ class Gameflow
   end
 
   def welcome_message
-    puts "⚓️ Welcome to BATTLESHIP ⚓️"
+    puts "\n"
+    puts "⚓️⚓️⚓️⚓️⚓️ Welcome to BATTLESHIP ⚓️⚓️⚓️⚓️⚓️ \n"
     puts "Enter 'p' to play. Enter 'q' to quit. Enter 'i' for instructions."
     player_input = input.downcase
     if player_input == 'p'
@@ -53,13 +54,13 @@ class Gameflow
     @wizard.comp_place(@wizard.cruise_ship)
     @wizard.comp_place(@wizard.sub)
 
-    puts "These are the rules for ship placement!"
-    puts "****************************************"
+    puts "These are the rules for ship placement!\n"
+    puts "🌀" * 40
     puts "Ships can be horizontal or vertical."
     puts "However, they cannot be overlapping or diagonal."
     puts "Coordinates need to be consecutive without skipping (Ex: 'A1 A2 A3')"
-    puts "Include one space between each coordinate."
-    puts "****************************************"
+    puts "Include one space between each coordinate.\n"
+    puts "🌀" * 40
     puts "\nNow enter 3 coordinates for your cruiser"
     puts @board.render(true)
 
@@ -119,9 +120,10 @@ class Gameflow
 
   def play
     puts "\nGreat decision! My ships are in play!"
-    puts "Are you ready to battle?"
+    puts " 🥊 Are you ready to battle?! 🥊 "
+    puts "\n"
     puts "Place your ships now."
-    puts "\nYour cruiser is 3 hits long and submarine is 2 hits long."
+    puts "\nYour cruiser is 3 hits long and submarine is 2 hits long. 🛳 🛳"
     puts "Your board is a 4x4. (Rows: A - D, Columns: 1 - 4)\n"
     place_coordinates
     take_turn
@@ -138,16 +140,17 @@ class Gameflow
 
   def take_turn
     until game_over
-      fire_missle
       display_boards
+      fire_missle
       if game_over && comp_sunk
-        puts " 🍗 🍗 🍗 🍗 🍗 Winner Winner Chicken Dinner! 🍗 🍗 🍗 🍗 🍗 "
-        puts "🔥" * 25
-        start
+        puts " \n🍗 🍗 🍗 🍗 🍗 Winner Winner Chicken Dinner! 🍗 🍗 🍗 🍗 🍗 "
+        puts "🔥" * 30 + "\n"
+        puts "\n"
+        restart
       end
       if game_over && player_sunk
-        puts " Mike Dao approves this message."
-        start
+        puts "\n You WON... Mike Dao approves this message."
+        restart
       end
     end
   end
@@ -159,7 +162,7 @@ class Gameflow
   def display_boards
     puts "\n=============COMPUTER BOARD=============\n"
     puts @wizard.wiz_board.render
-    puts "\n=============PLAYER BOARD=============\n"
+    puts "\n=============PLAYER BOARD===============\n"
     puts @board.render(true)
   end
 
@@ -181,7 +184,7 @@ class Gameflow
 
   def player_fire(player_input)
     until @wizard.wiz_board.valid_coordinate?(player_input) == true
-      puts "invalid coordinate try again"
+      puts "❌ invalid coordinate try again ❌"
       player_input = input.upcase
     end
       @wizard.wiz_board.cells[player_input].fire_upon
@@ -190,21 +193,21 @@ class Gameflow
 
   def player_result(player_input)
     if @wizard.wiz_board.cells[player_input].render == "X"
-      puts "YOU SUNK MY SHIP!!!"
+      puts "🆘🆘🆘🆘🆘 YOU SUNK MY SHIP!!! 💣💣💣💣💣"
     elsif @wizard.wiz_board.cells[player_input].render == "H"
-      puts "Ouch that hurt! Your shot on #{player_input} was a hit!!!"
+      puts "Ouch that hurt! 🩹 Your shot on #{player_input} was a hit!!! 🥊🥊🥊"
     elsif @wizard.wiz_board.cells[player_input].render == 'M'
-      puts "Your shot on #{player_input} was a big ole MISS!"
+      puts "Your shot on #{player_input} was a big ole MISS! 👀\n "
     end
   end
 
   def comp_result(guess)
     if @board.cells[guess].render == "X"
-      puts "dun dun dun I sunk your ship!"
+      puts "dun dun dun I sunk your ship! 🌊🌊🌊🌊🌊"
     elsif @board.cells[guess].render == "H"
       puts " 🔫 🥃 Sweet I hit that shot on #{guess}! Shots fired! 🔫 🥃 "
     elsif @board.cells[guess].render == "M"
-      puts "Dang it that shot on #{guess} was a MISS."
+      puts "Dang it that shot on #{guess} was a MISS. 👀"
     end
   end
 
@@ -214,5 +217,14 @@ class Gameflow
 
   def player_sunk
     @cruiser.sunk? && @submarine.sunk?
+  end
+
+  def restart
+    @board = Board.new
+    @player = Board.new
+    @wizard = Computer.new(player)
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
+    start
   end
 end
