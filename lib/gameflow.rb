@@ -21,8 +21,8 @@ class Gameflow
   end
 
   def start
-    welcome_message
     @board = Board.new
+    welcome_message
     @board.render
     ready_to_play
     fire_missle
