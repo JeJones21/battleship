@@ -145,14 +145,14 @@ class Gameflow
       display_boards
       fire_missle
       if game_over && comp_sunk
-        puts "\n"
+        puts "YOU WON!"
         puts " \n🍗 🍗 🍗 🍗 🍗 Winner Winner Chicken Dinner! 🍗 🍗 🍗 🍗 🍗 "
         puts "🔥" * 30 + "\n"
         puts "\n"
         restart
       end
       if game_over && player_sunk
-        puts "\n You WON... Mike Dao approves this message."
+        puts "\n The computer WON... Mike Dao approves this message."
         restart
       end
     end
