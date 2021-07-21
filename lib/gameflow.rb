@@ -18,29 +18,25 @@ class Gameflow
     @wizard = Computer.new(player)
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    @player_shots = @board.cells.keys
   end
-
-
 
   def start
     welcome_message
+    @board = Board.new
     @board.render
     ready_to_play
-    display_current_computer_board
-    display_current_player_board
     fire_missle
   end
 
   def welcome_message
     puts "⚓️ Welcome to BATTLESHIP ⚓️"
     puts "Enter 'p' to play. Enter 'q' to quit. Enter 'i' for instructions."
-    @player_input = input.downcase
-    if @player_input == 'p'
+    player_input = input.downcase
+    if player_input == 'p'
       play
-    elsif @player_input == 'q'
+    elsif player_input == 'q'
       quit
-    elsif @player_input == 'i'
+    elsif player_input == 'i'
       instructions
     else
       invalid
@@ -67,30 +63,30 @@ class Gameflow
     puts "\nNow enter 3 coordinates for your cruiser"
     puts @board.render(true)
 
-    @player_input = input.upcase.split
-    board.valid_placement?(cruiser, @player_input)
+    player_input = input.upcase.split
+    board.valid_placement?(cruiser, player_input)
 
-    while !board.valid_placement?(cruiser, @player_input)
-      puts "The coordinates #{@player_input} are not valid.\n"
+    while !board.valid_placement?(cruiser, player_input)
+      puts "The coordinates #{player_input} are not valid.\n"
       puts "Enter 3 coordinates for your cruiser."
-      @player_input = input.upcase.split
+      player_input = input.upcase.split
     end
 
-    board.place(cruiser, @player_input)
+    board.place(cruiser, player_input)
     puts "\n"
     puts @board.render(true)
 
     puts "\nNow enter 2 coordinates for your submarine"
-    @player_input = input.upcase.split
-    board.valid_placement?(submarine, @player_input)
+    player_input = input.upcase.split
+    board.valid_placement?(submarine, player_input)
 
-    while !board.valid_placement?(submarine, @player_input)
-      puts "The coordinates #{@player_input} are not valid.\n"
+    while !board.valid_placement?(submarine, player_input)
+      puts "The coordinates #{player_input} are not valid.\n"
       puts "Enter 2 coordinates for your submarine."
-      @player_input = input.upcase.split
+      player_input = input.upcase.split
     end
 
-    board.place(submarine, @player_input)
+    board.place(submarine, player_input)
     puts "\n"
     puts @board.render(true)
   end
@@ -108,11 +104,12 @@ class Gameflow
     puts "The first player to sink all of the opponent's ships wins!"
     puts "Would you like to play or quit?"
     puts "\n"
-    if @player_input == 'p'
+    player_input = gets.chomp
+    if player_input == 'p'
       play
-    elsif @player_input == 'q'
+    elsif player_input == 'q'
       quit
-    elsif @player_input == 'i'
+    elsif player_input == 'i'
       instructions
     else
       invalid
@@ -134,35 +131,29 @@ class Gameflow
     exit
   end
 
-
-
-
-
-
-  # Once the computer and player ships are placed, let the player know play begins
   def ready_to_play
     puts "\nIt looks like you're all set!"
     puts "Now get ready, because you get to fire first."
   end
 
   def take_turn
-    display_boards
-    player_fire
+    until game_over
+      fire_missle
+      display_boards
+      if game_over && comp_sunk
+        puts " 🍗 🍗 🍗 🍗 🍗 Winner Winner Chicken Dinner! 🍗 🍗 🍗 🍗 🍗 "
+        puts "🔥" * 25
+        start
+      end
+      if game_over && player_sunk
+        puts " Mike Dao approves this message."
+        start
+      end
+    end
+  end
 
-
-      # 1a. Display computer board (reveal: false)
-      # 1b. Display player board (reveal: true)
-    # 2. Player choosing a coordinate to fire on
-      # 2a. Check if user coordinate entered is valid
-    # 3. Computer choosing a coordinate to fire on
-    # 4. Reporting the result of the Player’s shot
-    # 5. Reporting the result of the Computer’s shot
-
-    # All of these are currently being called in 'start' but will be called in take_turn
-    # display_current_computer_board
-    # display_current_player_board
-    # fire_missle
-
+  def game_over
+    comp_sunk || player_sunk
   end
 
   def display_boards
@@ -173,47 +164,48 @@ class Gameflow
   end
 
   def fire_missle
-    puts "\nEnter the coordinate for your shot:"
-    @player_input = input.upcase
-    player_fire
+    puts "\nEnter the coordinate for your shot..."
+    player_input = input.upcase
+    player_fire(player_input)
     puts "\nNext is the firing upon the computer board."
     computer_fire
   end
 
-
   def computer_fire
     # generate a new random coordinate
-    guess = @wiz_board.shots.sample
-    @comp_shots = guess
+    guess = @wizard.shots.sample
     @board.cells[guess].fire_upon
-    @wiz_board.shots.delete(guess)
-    @comp_shots
+    @wizard.shots.delete(guess)
+    comp_result(guess)
   end
 
-  def player_fire
-    @wizard.wiz_board.cells[@player_shot].fire_upon
-    @last_shot_player = @player_shot
-    @player_shots.delete(@player_shot)
+  def player_fire(player_input)
+    until @wizard.wiz_board.valid_coordinate?(player_input) == true
+      puts "invalid coordinate try again"
+      player_input = input.upcase
+    end
+      @wizard.wiz_board.cells[player_input].fire_upon
+      player_result(player_input)
   end
 
-  def player_result
-    if @wizard.wiz_board.cells[@last_shot_player].render == 'M'
-      puts "Your shot on #{@last_shot_player} was a big ole MISS!"
-    elsif @board.cells[@last_shot_player].render == "S"
+  def player_result(player_input)
+    if @wizard.wiz_board.cells[player_input].render == "X"
       puts "YOU SUNK MY SHIP!!!"
-    elsif @board.cells[@last_shot_player].render == "H"
-      puts "Ouch that hurt! Your shot on  #{last_shot_player} was a hit!!!"
+    elsif @wizard.wiz_board.cells[player_input].render == "H"
+      puts "Ouch that hurt! Your shot on #{player_input} was a hit!!!"
+    elsif @wizard.wiz_board.cells[player_input].render == 'M'
+      puts "Your shot on #{player_input} was a big ole MISS!"
     end
   end
 
-  def comp_result
-    if @board.cells[@comp_shots].render == "M"
-     puts "Dang it that shot on #{@comp_shots} was a MISS."
-   elsif @board.cells[@comp_shots].render == "S"
-     puts "dun dun dun I sunk your ship!"
-   elsif @board.cells[@comp_shots].render == "H"
-     puts "Sweet I hit that shot on #{@comp_shots}! Talk about a hit!"
-   end
+  def comp_result(guess)
+    if @board.cells[guess].render == "X"
+      puts "dun dun dun I sunk your ship!"
+    elsif @board.cells[guess].render == "H"
+      puts " 🔫 🥃 Sweet I hit that shot on #{guess}! Shots fired! 🔫 🥃 "
+    elsif @board.cells[guess].render == "M"
+      puts "Dang it that shot on #{guess} was a MISS."
+    end
   end
 
   def comp_sunk
@@ -223,5 +215,4 @@ class Gameflow
   def player_sunk
     @cruiser.sunk? && @submarine.sunk?
   end
-
 end
