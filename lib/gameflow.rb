@@ -8,15 +8,20 @@ class Gameflow
   attr_reader :board,
               :wizard,
               :cruiser,
-              :submarine
+              :submarine,
+              :player_shots,
+              :player
 
   def initialize
     @board = Board.new
-    player = Board.new
+    @player = Board.new
     @wizard = Computer.new(player)
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @player_shots = @board.cells.keys
   end
+
+
 
   def start
     welcome_message
@@ -90,10 +95,6 @@ class Gameflow
     puts @board.render(true)
   end
 
-  def ship_placement
-
-  end
-
   def invalid
     puts "Invalid entry."
   end
@@ -126,6 +127,7 @@ class Gameflow
     puts "\nYour cruiser is 3 hits long and submarine is 2 hits long."
     puts "Your board is a 4x4. (Rows: A - D, Columns: 1 - 4)\n"
     place_coordinates
+    take_turn
   end
 
   def quit
@@ -144,7 +146,10 @@ class Gameflow
   end
 
   def take_turn
-    # 1. Displaying the boards
+    display_boards
+    player_fire
+
+
       # 1a. Display computer board (reveal: false)
       # 1b. Display player board (reveal: true)
     # 2. Player choosing a coordinate to fire on
@@ -160,12 +165,9 @@ class Gameflow
 
   end
 
-  def display_current_computer_board
+  def display_boards
     puts "\n=============COMPUTER BOARD=============\n"
     puts @wizard.wiz_board.render
-  end
-
-  def display_current_player_board
     puts "\n=============PLAYER BOARD=============\n"
     puts @board.render(true)
   end
@@ -173,13 +175,11 @@ class Gameflow
   def fire_missle
     puts "\nEnter the coordinate for your shot:"
     @player_input = input.upcase
-
+    player_fire
     puts "\nNext is the firing upon the computer board."
-    @wizard.wiz_board.fire_on_this_coordinate(@player_input)
-
-    # computer_fire
-    firing_result
+    computer_fire
   end
+
 
   def computer_fire
     # generate a new random coordinate
@@ -187,11 +187,41 @@ class Gameflow
     @comp_shots = guess
     @board.cells[guess].fire_upon
     @wiz_board.shots.delete(guess)
+    @comp_shots
   end
 
-  # def firing_result
-  #   puts "Your shot on #{@player_input} was a #{board.fire_on_this_coordinate(@player_input)}" # computer
-  #   puts "My shot on #{@comp_shots} was a #{}"
-  #   cell.render(true)
-  # end
+  def player_fire
+    @wizard.wiz_board.cells[@player_shot].fire_upon
+    @last_shot_player = @player_shot
+    @player_shots.delete(@player_shot)
+  end
+
+  def player_result
+    if @wizard.wiz_board.cells[@last_shot_player].render == 'M'
+      puts "Your shot on #{@last_shot_player} was a big ole MISS!"
+    elsif @board.cells[@last_shot_player].render == "S"
+      puts "YOU SUNK MY SHIP!!!"
+    elsif @board.cells[@last_shot_player].render == "H"
+      puts "Ouch that hurt! Your shot on  #{last_shot_player} was a hit!!!"
+    end
+  end
+
+  def comp_result
+    if @board.cells[@comp_shots].render == "M"
+     puts "Dang it that shot on #{@comp_shots} was a MISS."
+   elsif @board.cells[@comp_shots].render == "S"
+     puts "dun dun dun I sunk your ship!"
+   elsif @board.cells[@comp_shots].render == "H"
+     puts "Sweet I hit that shot on #{@comp_shots}! Talk about a hit!"
+   end
+  end
+
+  def comp_sunk
+    @wizard.cruise_ship.sunk? && @wizard.sub.sunk?
+  end
+
+  def player_sunk
+    @cruiser.sunk? && @submarine.sunk?
+  end
+
 end
