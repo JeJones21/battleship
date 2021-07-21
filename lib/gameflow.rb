@@ -55,11 +55,13 @@ class Gameflow
     @wizard.comp_place(@wizard.sub)
 
     puts "These are the rules for ship placement!\n"
+    puts "\n"
     puts "🌀" * 40
     puts "Ships can be horizontal or vertical."
     puts "However, they cannot be overlapping or diagonal."
     puts "Coordinates need to be consecutive without skipping (Ex: 'A1 A2 A3')"
     puts "Include one space between each coordinate.\n"
+    puts "\n"
     puts "🌀" * 40
     puts "\nNow enter 3 coordinates for your cruiser"
     puts @board.render(true)
